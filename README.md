@@ -27,7 +27,7 @@ https://fsssmcmosque.netlify.app/
 
 This project was developed to create a professional online presence for a mosque community while demonstrating frontend development skills including responsive design, user interface development, accessibility, and modern web design principles.
 
-## Created By
+## Author 
 
 AbdulGaniyu AbdulAzeem
 
