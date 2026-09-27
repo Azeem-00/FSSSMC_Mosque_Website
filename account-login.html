@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FSSSMC Account Login</title>
+    <style>
+      :root {
+        --bg: #edf5f0;
+        --panel: #ffffff;
+        --green: #1d8f4d;
+        --green-dark: #0f5f35;
+        --green-soft: #edf9f1;
+        --text: #1e2d2b;
+        --muted: #5d6d68;
+        --line: #dfeae4;
+        --danger: #ad3b3b;
+        --shadow: 0 28px 60px rgba(15, 44, 31, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eef6f1, #f8fbf8 45%, #edf4ef);
+        color: var(--text);
+      }
+
+      .page-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 28px 20px 48px;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.92rem;
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+
+      .breadcrumb a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .auth-shell {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        background: var(--panel);
+        border-radius: 28px;
+        border: 1px solid var(--line);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .branding {
+        background: linear-gradient(135deg, #0f3d2e, #1a5b3f 65%, #287a50);
+        color: white;
+        padding: 42px 34px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .logo-row {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 26px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .logo-row img {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        object-fit: contain;
+        display: block;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.12);
+        padding: 4px;
+      }
+
+      .branding h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2.1rem, 4vw, 2.9rem);
+        line-height: 1.08;
+      }
+
+      .branding p {
+        margin: 0;
+        font-size: 1.06rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 24px 0 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 600;
+      }
+
+      .feature-list li::before {
+        content: "✓";
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 0.8rem;
+      }
+
+      .auth-box {
+        padding: 40px 32px;
+      }
+
+      .auth-header {
+        margin-bottom: 24px;
+      }
+
+      .auth-header h2 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        color: var(--green-dark);
+      }
+
+      .auth-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .flash {
+        padding: 11px 12px;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        font-weight: 700;
+      }
+
+      .flash.error {
+        background: #fff0f0;
+        color: var(--danger);
+        border: 1px solid #ecc9c9;
+      }
+
+      .flash.success {
+        background: #edf9f1;
+        color: var(--green-dark);
+        border: 1px solid #cfe8d5;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        margin-bottom: 18px;
+        font-size: 1rem;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+
+      .password-wrap {
+        position: relative;
+        margin-bottom: 18px;
+      }
+
+      .password-wrap input {
+        padding-right: 90px;
+        margin-bottom: 0;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        color: var(--green-dark);
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 6px 8px;
+        border-radius: 8px;
+        width: auto;
+        margin: 0;
+        z-index: 1;
+      }
+
+      .toggle-password:hover {
+        background: rgba(29, 143, 77, 0.08);
+      }
+
+      input:focus {
+        outline: none;
+        border-color: var(--green);
+        box-shadow: 0 0 0 4px rgba(29, 143, 77, 0.12);
+      }
+
+      button {
+        width: 100%;
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
+        border: none;
+        color: white;
+        border-radius: 12px;
+        padding: 15px 18px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .meta {
+        margin-top: 18px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      .meta a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 820px) {
+        .auth-shell {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span>Login</span>
+      </nav>
+
+      <div class="auth-shell">
+        <div class="branding">
+          <div class="logo-row">
+            <img src="/IMAGE/FSSMC%20ICON.jpeg" alt="FSSSMC Logo" />
+            <span>FSSSMC Mosque</span>
+          </div>
+
+          <h1>Welcome back to the mosque community.</h1>
+          <p>
+            Sign in to view prayer updates, upcoming events, important notices,
+            and your member information in one secure place.
+          </p>
+
+          <ul class="feature-list">
+            <li>Access your member account</li>
+            <li>View updates and upcoming programs</li>
+            <li>Manage your community profile</li>
+          </ul>
+        </div>
+
+        <div class="auth-box">
+          <div class="auth-header">
+            <h2>Login</h2>
+            <p>Access your account securely.</p>
+          </div>
+
+          <div id="error-box" class="flash error" style="display: none"></div>
+          <div
+            id="success-box"
+            class="flash success"
+            style="display: none"
+          ></div>
+
+          <form method="POST" action="/account/login">
+            <label for="username">Username or Email</label>
+            <input type="text" id="username" name="username" required />
+
+            <label for="password">Password</label>
+            <div class="password-wrap">
+              <input type="password" id="password" name="password" required />
+              <button
+                type="button"
+                class="toggle-password"
+                data-target="password"
+                aria-label="Show password"
+              >
+                Hide
+              </button>
+            </div>
+
+            <button type="submit">Login</button>
+          </form>
+
+          <div class="meta">
+            Don’t have an account?
+            <a href="/account/register">Create Account</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const errorBox = document.getElementById("error-box");
+      const successBox = document.getElementById("success-box");
+      const error = params.get("error");
+      const registered = params.get("registered");
+      const usernameValue = params.get("username");
+
+      if (usernameValue) {
+        const usernameField = document.getElementById("username");
+        if (usernameField) {
+          usernameField.value = decodeURIComponent(
+            usernameValue.replace(/\+/g, " "),
+          );
+        }
+      }
+
+      if (registered === "1") {
+        successBox.textContent =
+          "Account created successfully. You are now a member.";
+        successBox.style.display = "block";
+      }
+
+      if (error) {
+        errorBox.textContent = decodeURIComponent(error.replace(/\+/g, " "));
+        errorBox.style.display = "block";
+      }
+
+      document.querySelectorAll(".toggle-password").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetId = button.dataset.target;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          const isPassword = input.type === "password";
+          input.type = isPassword ? "text" : "password";
+          button.textContent = isPassword ? "Show" : "Hide";
+          button.setAttribute(
+            "aria-label",
+            isPassword ? "Hide password" : "Show password",
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

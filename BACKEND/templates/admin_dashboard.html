@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FSSSMC Admin Dashboard</title>
+    <style>
+      :root {
+        --bg: #f4f7f1;
+        --panel: #ffffff;
+        --green: #1d8f4d;
+        --green-dark: #0f5f35;
+        --text: #1e2a27;
+        --muted: #5c6b66;
+        --line: #dfe9e2;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 24px 18px 60px;
+      }
+      .header {
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
+        color: white;
+        padding: 20px 0;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 20px;
+        box-shadow: 0 10px 25px rgba(17, 37, 25, 0.05);
+        margin-top: 24px;
+      }
+      h2 {
+        margin-top: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        overflow: hidden;
+      }
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+      }
+      th {
+        background: #f0f7f2;
+      }
+      .badge {
+        display: inline-block;
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 700;
+        background: #e8f7ee;
+        color: var(--green-dark);
+      }
+      .status-paid {
+        background: #e8f7ee;
+        color: #0d7a3a;
+      }
+      .status-pending {
+        background: #fff5d6;
+        color: #8a6200;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container">
+        <h1>FSSSMC Mosque Admin Dashboard</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="panel">
+        <h2>Recent Donations</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Full Name</th>
+              <th>Amount</th>
+              <th>Reference</th>
+              <th>Status</th>
+              <th>Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for donation in donations %}
+            <tr>
+              <td>{{ donation['ID'] }}</td>
+              <td>{{ donation['Title'] or '—' }}</td>
+              <td>{{ donation['Full_Name'] }}</td>
+              <td>₦{{ '%.2f' % donation['Amount_Donated'] }}</td>
+              <td>{{ donation['Reference'] or '—' }}</td>
+              <td>
+                <span
+                  class="badge {% if donation['Status'] == 'paid' %}status-paid{% else %}status-pending{% endif %}"
+                  >{{ donation['Status'] or 'pending' }}</span
+                >
+              </td>
+              <td>{{ donation['Created_At'] }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="7">No donations recorded yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="panel">
+        <h2>Recent Members</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Full Name</th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for member in members %}
+            <tr>
+              <td>{{ member['ID'] }}</td>
+              <td>{{ member['Title'] or '—' }}</td>
+              <td>
+                {{ (member['First_Name'] or '') ~ ' ' ~ (member['Last_Name'] or
+                '') }}
+              </td>
+              <td>{{ member['Phone'] or member['Phone_Number'] or '—' }}</td>
+              <td>{{ member['Email'] or '—' }}</td>
+              <td>{{ member['Address'] or '—' }}</td>
+              <td>{{ member['Member_Type'] or '—' }}</td>
+            </tr>
+            {% else %}
+            <tr>
+              <td colspan="7">No members recorded yet.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

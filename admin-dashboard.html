@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FSSSMC Admin Dashboard</title>
+    <style>
+      :root {
+        --bg: #f3f6f1;
+        --panel: #ffffff;
+        --panel-soft: #f7faf7;
+        --green: #166c3d;
+        --green-dark: #0d4529;
+        --green-soft: #eaf7ee;
+        --gold: #d9a441;
+        --gold-soft: #fff5df;
+        --text: #17251d;
+        --muted: #5a6a62;
+        --line: #dfeae2;
+        --danger: #b53939;
+        --danger-soft: #ffe9e9;
+        --shadow: 0 18px 40px rgba(12, 42, 25, 0.08);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: linear-gradient(180deg, #edf4ee 0%, #f7f9f6 100%);
+        color: var(--text);
+      }
+
+      a {
+        text-decoration: none;
+      }
+
+      .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 24px 18px 70px;
+      }
+
+      .header {
+        background: linear-gradient(
+          135deg,
+          var(--green) 0%,
+          var(--green-dark) 100%
+        );
+        color: white;
+        padding: 26px 0 18px;
+        box-shadow: 0 12px 28px rgba(12, 42, 25, 0.18);
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: clamp(1.8rem, 2.4vw, 2.6rem);
+        letter-spacing: -0.04em;
+      }
+
+      .brand span {
+        display: inline-block;
+        margin-top: 8px;
+        color: rgba(255, 255, 255, 0.88);
+        font-weight: 600;
+      }
+
+      .logout-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 18px;
+        border-radius: 999px;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-weight: 700;
+      }
+
+      .summary-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+        gap: 18px;
+        margin-top: 28px;
+      }
+
+      .summary-card {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 20px 22px;
+        box-shadow: var(--shadow);
+      }
+
+      .summary-label {
+        color: var(--muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+      }
+
+      .summary-value {
+        font-size: clamp(1.8rem, 2vw, 2.3rem);
+        font-weight: 800;
+        color: var(--green-dark);
+      }
+
+      .layout-grid {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 24px;
+        margin-top: 30px;
+      }
+
+      .stack {
+        display: grid;
+        gap: 24px;
+      }
+
+      .panel {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 22px;
+        box-shadow: var(--shadow);
+        padding: 22px;
+      }
+
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .panel-header h2 {
+        margin: 0;
+        font-size: 1.35rem;
+      }
+
+      .panel-tag {
+        background: var(--green-soft);
+        color: var(--green-dark);
+        padding: 7px 12px;
+        border-radius: 999px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+
+      th,
+      td {
+        text-align: left;
+        padding: 12px 10px;
+        border-bottom: 1px solid var(--line);
+        vertical-align: middle;
+      }
+
+      th {
+        background: var(--panel-soft);
+        color: var(--muted);
+        font-size: 0.78rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+      }
+
+      td {
+        color: var(--text);
+      }
+
+      .member-name {
+        font-weight: 700;
+      }
+
+      .member-actions {
+        display: flex;
+        gap: 8px;
+        justify-content: flex-end;
+      }
+
+      .btn {
+        border: none;
+        border-radius: 10px;
+        padding: 9px 12px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: transform 0.15s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: var(--green);
+        color: white;
+      }
+
+      .btn-danger {
+        background: var(--danger-soft);
+        color: var(--danger);
+      }
+
+      .btn-ghost {
+        background: var(--green-soft);
+        color: var(--green-dark);
+      }
+
+      .empty-state {
+        color: var(--muted);
+        font-style: italic;
+        text-align: center;
+        padding: 18px 12px;
+      }
+
+      .form-grid {
+        display: grid;
+        gap: 14px;
+      }
+
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+
+      label {
+        font-size: 0.85rem;
+        font-weight: 700;
+        color: var(--muted);
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fbfcfb;
+        font-size: 0.97rem;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: rgba(22, 108, 61, 0.55);
+        box-shadow: 0 0 0 4px rgba(22, 108, 61, 0.08);
+      }
+
+      .alert {
+        margin-top: 12px;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-size: 0.92rem;
+        display: none;
+      }
+
+      .alert.success {
+        background: var(--green-soft);
+        color: var(--green-dark);
+        display: block;
+      }
+
+      .alert.error {
+        background: var(--danger-soft);
+        color: var(--danger);
+        display: block;
+      }
+
+      @media (max-width: 920px) {
+        .layout-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 700px) {
+        .topbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        th,
+        td {
+          font-size: 0.82rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="container topbar">
+        <div class="brand">
+          <h1>FSSSMC Mosque</h1>
+          <span>Executive Admin Dashboard</span>
+        </div>
+        <a class="logout-btn" href="/admin/logout">Logout</a>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="summary-grid">
+        <div class="summary-card">
+          <div class="summary-label">Current Members</div>
+          <div class="summary-value" id="current-members-count">0</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Removed Members</div>
+          <div class="summary-value" id="removed-members-count">0</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Total Donations</div>
+          <div class="summary-value" id="total-donations">₦0</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Admin Accounts</div>
+          <div class="summary-value" id="admin-count">1</div>
+        </div>
+      </div>
+
+      <div class="layout-grid">
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Current Members</h2>
+              <span class="panel-tag">Active</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Member Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="current-members-body"></tbody>
+            </table>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Removed Members</h2>
+              <span class="panel-tag">Archived</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Name</th>
+                  <th>Phone</th>
+                  <th>Member Type</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="removed-members-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="stack">
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Add New Admin</h2>
+              <span class="panel-tag">Access</span>
+            </div>
+            <form id="admin-form" class="form-grid">
+              <div class="field">
+                <label for="admin-full-name">Full Name</label>
+                <input
+                  id="admin-full-name"
+                  name="full_name"
+                  type="text"
+                  placeholder="Enter full name"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="admin-username">Username</label>
+                <input
+                  id="admin-username"
+                  name="username"
+                  type="text"
+                  placeholder="Create admin username"
+                  required
+                />
+              </div>
+              <div class="field">
+                <label for="admin-password">Password</label>
+                <input
+                  id="admin-password"
+                  name="password"
+                  type="password"
+                  placeholder="Create a strong password"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-primary">
+                Create Admin Account
+              </button>
+            </form>
+            <div id="admin-alert" class="alert"></div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-header">
+              <h2>Recent Donations</h2>
+              <span class="panel-tag">Finance</span>
+            </div>
+            <table>
+              <thead>
+                <tr>
+                  <th>Donor</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="donations-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const formatMoney = (value) =>
+        new Intl.NumberFormat("en-NG", {
+          style: "currency",
+          currency: "NGN",
+          maximumFractionDigits: 2,
+        }).format(Number(value || 0));
+
+      function memberDisplayName(row) {
+        const first = row.First_Name || "";
+        const last = row.Last_Name || "";
+        const name = [first, last].join(" ").trim();
+        return name || row.Full_Name || "Unnamed Member";
+      }
+
+      function getRowActions(row, section) {
+        const actionText = section === "removed" ? "Restore" : "Remove";
+        const actionClass = section === "removed" ? "btn-ghost" : "btn-danger";
+        return `<div class="member-actions"><button class="btn ${actionClass}" data-id="${row.ID}" data-action="${section === "removed" ? "restore" : "remove"}">${actionText}</button></div>`;
+      }
+
+      function renderMembersTable(targetId, rows, section) {
+        const tbody = document.getElementById(targetId);
+        if (!rows.length) {
+          tbody.innerHTML = `<tr><td colspan="5" class="empty-state">No ${section === "removed" ? "removed" : "current"} members.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = rows
+          .map(
+            (row) => `
+          <tr>
+            <td>${row.ID ?? "—"}</td>
+            <td class="member-name">${memberDisplayName(row)}</td>
+            <td>${row.Phone || row.Phone_Number || "—"}</td>
+            <td>${row.Member_Type || "—"}</td>
+            <td>${getRowActions(row, section)}</td>
+          </tr>
+        `,
+          )
+          .join("");
+      }
+
+      async function loadDashboard() {
+        try {
+          const [currentResp, removedResp, donationResp] = await Promise.all([
+            fetch("/api/admin/members/current"),
+            fetch("/api/admin/members/removed"),
+            fetch("/api/donations/report"),
+          ]);
+
+          if (!currentResp.ok || !removedResp.ok || !donationResp.ok) {
+            throw new Error("Dashboard data could not be loaded.");
+          }
+
+          const currentData = await currentResp.json();
+          const removedData = await removedResp.json();
+          const donationData = await donationResp.json();
+
+          const currentMembers = Array.isArray(currentData.data)
+            ? currentData.data
+            : [];
+          const removedMembers = Array.isArray(removedData.data)
+            ? removedData.data
+            : [];
+          const donations = Array.isArray(donationData.data)
+            ? donationData.data
+            : [];
+
+          document.getElementById("current-members-count").textContent = String(
+            currentMembers.length,
+          );
+          document.getElementById("removed-members-count").textContent = String(
+            removedMembers.length,
+          );
+          const totalDonations = donations.reduce(
+            (sum, row) => sum + Number(row.Amount_Donated || 0),
+            0,
+          );
+          document.getElementById("total-donations").textContent =
+            formatMoney(totalDonations);
+          document.getElementById("admin-count").textContent = "1+";
+
+          renderMembersTable("current-members-body", currentMembers, "current");
+          renderMembersTable("removed-members-body", removedMembers, "removed");
+
+          const donationBody = document.getElementById("donations-body");
+          if (!donations.length) {
+            donationBody.innerHTML =
+              '<tr><td colspan="3" class="empty-state">No donations recorded yet.</td></tr>';
+          } else {
+            donationBody.innerHTML = donations
+              .slice(0, 5)
+              .map(
+                (row) => `
+              <tr>
+                <td>${row.Full_Name || "—"}</td>
+                <td>${formatMoney(row.Amount_Donated)}</td>
+                <td>${(row.Status || "pending").toLowerCase() === "paid" ? "Paid" : "Pending"}</td>
+              </tr>
+            `,
+              )
+              .join("");
+          }
+        } catch (error) {
+          document.getElementById("current-members-body").innerHTML =
+            '<tr><td colspan="5" class="empty-state">Unable to load current members.</td></tr>';
+          document.getElementById("removed-members-body").innerHTML =
+            '<tr><td colspan="5" class="empty-state">Unable to load removed members.</td></tr>';
+          document.getElementById("donations-body").innerHTML =
+            '<tr><td colspan="3" class="empty-state">Unable to load donations.</td></tr>';
+        }
+      }
+
+      async function handleMemberAction(event) {
+        const button = event.target.closest("button[data-action]");
+        if (!button) return;
+
+        const memberId = button.dataset.id;
+        const action = button.dataset.action;
+        const endpoint =
+          action === "remove"
+            ? `/api/admin/members/${memberId}/remove`
+            : `/api/admin/members/${memberId}/restore`;
+
+        try {
+          const response = await fetch(endpoint, { method: "POST" });
+          const result = await response.json();
+          if (!response.ok) throw new Error(result.message || "Action failed.");
+          loadDashboard();
+        } catch (error) {
+          alert(error.message || "Something went wrong.");
+        }
+      }
+
+      document.addEventListener("click", handleMemberAction);
+
+      document
+        .getElementById("admin-form")
+        .addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const alertBox = document.getElementById("admin-alert");
+          const form = event.currentTarget;
+          const payload = {
+            full_name: form.full_name.value.trim(),
+            username: form.username.value.trim(),
+            password: form.password.value.trim(),
+          };
+
+          try {
+            const response = await fetch("/api/admin/users", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+            const result = await response.json();
+
+            if (!response.ok) {
+              throw new Error(result.message || "Could not create admin.");
+            }
+
+            alertBox.className = "alert success";
+            alertBox.textContent = result.message;
+            form.reset();
+            document.getElementById("admin-count").textContent = "2+";
+          } catch (error) {
+            alertBox.className = "alert error";
+            alertBox.textContent = error.message;
+          }
+        });
+
+      loadDashboard();
+    </script>
+  </body>
+</html>

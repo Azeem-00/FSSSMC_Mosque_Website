@@ -1,0 +1,498 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create FSSSMC Account</title>
+    <style>
+      :root {
+        --bg: #edf5f0;
+        --panel: #ffffff;
+        --green: #1d8f4d;
+        --green-dark: #0f5f35;
+        --green-soft: #edf9f1;
+        --text: #1e2d2b;
+        --muted: #5d6d68;
+        --line: #dfeae4;
+        --danger: #ad3b3b;
+        --shadow: 0 28px 60px rgba(15, 44, 31, 0.12);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #eef6f1, #f8fbf8 45%, #edf4ef);
+        color: var(--text);
+      }
+
+      .page-shell {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 28px 20px 48px;
+      }
+
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 0.92rem;
+        color: var(--muted);
+        margin-bottom: 18px;
+      }
+
+      .breadcrumb a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      .auth-box {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+      }
+
+      .branding {
+        background: linear-gradient(135deg, #0f3d2e, #1a5b3f 65%, #287a50);
+        color: #ffffff;
+        padding: 36px 28px;
+      }
+
+      .brand-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 28px;
+        font-weight: 800;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-header img {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+        object-fit: contain;
+        display: block;
+        flex-shrink: 0;
+        background: rgba(255, 255, 255, 0.12);
+        padding: 4px;
+      }
+
+      .branding h1 {
+        margin: 0 0 12px;
+        font-size: clamp(2rem, 4vw, 2.8rem);
+        line-height: 1.08;
+      }
+
+      .branding p {
+        margin: 0;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.82);
+      }
+
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 26px 0 0;
+        display: grid;
+        gap: 12px;
+      }
+
+      .feature-list li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: rgba(255, 255, 255, 0.92);
+        font-weight: 600;
+      }
+
+      .feature-list li::before {
+        content: "✓";
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.12);
+        font-size: 0.8rem;
+      }
+
+      .form-panel {
+        padding: 32px 28px 30px;
+      }
+
+      .form-header {
+        margin-bottom: 22px;
+      }
+
+      .form-header h2 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        color: var(--green-dark);
+      }
+
+      .form-header p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .flash {
+        padding: 11px 12px;
+        border-radius: 12px;
+        margin-bottom: 18px;
+        font-weight: 700;
+      }
+
+      .flash.error {
+        background: #fff0f0;
+        color: var(--danger);
+        border: 1px solid #ecc9c9;
+      }
+
+      .flash.success {
+        background: #edf9f1;
+        color: var(--green-dark);
+        border: 1px solid #cfe8d5;
+      }
+
+      form {
+        display: grid;
+        gap: 14px;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 14px 16px;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        background: #fff;
+        font-size: 1rem;
+        color: var(--text);
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+
+      .password-wrap {
+        position: relative;
+      }
+
+      .password-wrap input {
+        padding-right: 110px;
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        border: none;
+        background: transparent;
+        color: var(--green-dark);
+        font-size: 0.8rem;
+        font-weight: 700;
+        cursor: pointer;
+        padding: 6px 8px;
+        border-radius: 8px;
+        width: auto;
+        margin: 0;
+        z-index: 1;
+      }
+
+      .toggle-password:hover {
+        background: rgba(29, 143, 77, 0.08);
+      }
+
+      select {
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--green-dark) 50%),
+          linear-gradient(135deg, var(--green-dark) 50%, transparent 50%);
+        background-position:
+          calc(100% - 18px) calc(50% - 2px),
+          calc(100% - 12px) calc(50% - 2px);
+        background-size:
+          6px 6px,
+          6px 6px;
+        background-repeat: no-repeat;
+        padding-right: 42px;
+      }
+
+      input:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--green);
+        box-shadow: 0 0 0 4px rgba(29, 143, 77, 0.12);
+      }
+
+      button {
+        width: 100%;
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
+        border: none;
+        color: white;
+        border-radius: 12px;
+        padding: 15px 18px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+
+      .meta {
+        margin-top: 18px;
+        text-align: center;
+        font-size: 0.96rem;
+        color: var(--muted);
+      }
+
+      .meta a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 700;
+      }
+
+      @media (max-width: 820px) {
+        .auth-box {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a>
+        <span>›</span>
+        <span>Create Account</span>
+      </nav>
+
+      <div class="auth-box">
+        <div class="branding">
+          <div class="brand-header">
+            <img src="/IMAGE/FSSMC%20ICON.jpeg" alt="FSSSMC Logo" />
+            <span>FSSSMC Mosque</span>
+          </div>
+
+          <h1>Become part of the mosque family.</h1>
+          <p>
+            Create your account to receive updates, join events, stay connected,
+            and manage your membership details with ease.
+          </p>
+
+          <ul class="feature-list">
+            <li>Register as a member</li>
+            <li>Access your personal profile</li>
+            <li>Stay informed about events and services</li>
+          </ul>
+        </div>
+
+        <div class="form-panel">
+          <div class="form-header">
+            <h2>Create Account</h2>
+            <p>Set up your account and membership details.</p>
+          </div>
+
+          <div
+            id="success-box"
+            class="flash success"
+            style="display: none"
+          ></div>
+          <div id="error-box" class="flash error" style="display: none"></div>
+
+          <form method="POST" action="/account/register">
+            <div class="field-grid">
+              <div>
+                <label for="full_name">Full Name</label>
+                <input type="text" id="full_name" name="full_name" required />
+              </div>
+
+              <div>
+                <label for="title">Title</label>
+                <select id="title" name="title" required>
+                  <option value="">Select title</option>
+                  <option value="Alhaji">Alhaji</option>
+                  <option value="Alhaja">Alhaja</option>
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Sister">Sister</option>
+                  <option value="Ustadh">Ustadh</option>
+                  <option value="Ustazah">Ustazah</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="phone">Phone</label>
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phone"
+                  placeholder="08012345678"
+                  required
+                />
+              </div>
+
+              <div>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required />
+              </div>
+
+              <div class="full-width" style="grid-column: 1 / -1">
+                <label for="address">Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  placeholder="Lagos"
+                  required
+                />
+              </div>
+
+              <div class="full-width" style="grid-column: 1 / -1">
+                <label for="member_type">Membership Type</label>
+                <select id="member_type" name="member_type" required>
+                  <option value="">Select type</option>
+                  <option value="Regular Member">Regular Member</option>
+                  <option value="Volunteer">Volunteer</option>
+                  <option value="Youth Member">Youth Member</option>
+                  <option value="Supporter">Supporter</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required />
+              </div>
+
+              <div>
+                <label for="password">Password</label>
+                <div class="password-wrap">
+                  <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="toggle-password"
+                    data-target="password"
+                    aria-label="Show password"
+                  >
+                    Hide
+                  </button>
+                </div>
+              </div>
+
+              <div class="full-width" style="grid-column: 1 / -1">
+                <label for="confirm_password">Confirm Password</label>
+                <div class="password-wrap">
+                  <input
+                    type="password"
+                    id="confirm_password"
+                    name="confirm_password"
+                    required
+                  />
+                  <button
+                    type="button"
+                    class="toggle-password"
+                    data-target="confirm_password"
+                    aria-label="Show confirm password"
+                  >
+                    Hide
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button type="submit">Create Account & Register as Member</button>
+          </form>
+
+          <div class="meta">
+            Already have an account? <a href="/account/login">Login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const errorBox = document.getElementById("error-box");
+      const successBox = document.getElementById("success-box");
+      const error = params.get("error");
+      const registered = params.get("registered");
+
+      const fieldMap = {
+        full_name: "full_name",
+        email: "email",
+        username: "username",
+        title: "title",
+        phone: "phone",
+        address: "address",
+        member_type: "member_type",
+      };
+
+      Object.entries(fieldMap).forEach(([paramKey, inputId]) => {
+        const value = params.get(paramKey);
+        if (value) {
+          const field = document.getElementById(inputId);
+          if (field)
+            field.value = decodeURIComponent(value.replace(/\+/g, " "));
+        }
+      });
+
+      if (registered === "1") {
+        successBox.textContent =
+          "Account created successfully. You are now a member.";
+        successBox.style.display = "block";
+      }
+
+      if (error) {
+        errorBox.textContent = decodeURIComponent(error.replace(/\+/g, " "));
+        errorBox.style.display = "block";
+      }
+
+      document.querySelectorAll(".toggle-password").forEach((button) => {
+        button.addEventListener("click", () => {
+          const targetId = button.dataset.target;
+          const input = document.getElementById(targetId);
+          if (!input) return;
+          const isPassword = input.type === "password";
+          input.type = isPassword ? "text" : "password";
+          button.textContent = isPassword ? "Show" : "Hide";
+          button.setAttribute(
+            "aria-label",
+            isPassword ? "Hide password" : "Show password",
+          );
+        });
+      });
+    </script>
+  </body>
+</html>

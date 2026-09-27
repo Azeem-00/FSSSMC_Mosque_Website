@@ -5,6 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FSSSMC Mosque - Get Involved</title>
     <link rel="stylesheet" href="/CSS/involve.css" />
+    <style>
+      .data-form {
+        display: grid;
+        gap: 22px;
+      }
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(240px, 1fr));
+        gap: 18px 20px;
+      }
+      .form-field {
+        display: grid;
+        gap: 9px;
+      }
+      .form-field.full-width {
+        grid-column: 1 / -1;
+      }
+      .data-form label {
+        display: grid;
+        gap: 10px;
+        font-weight: 700;
+        color: #1f2d28;
+        font-size: 0.94rem;
+      }
+      .data-form input,
+      .data-form select {
+        width: 100%;
+        min-height: 54px;
+        padding: 14px 16px;
+        border-radius: 14px;
+        border: 1px solid #d6dfd8;
+        background: linear-gradient(180deg, #ffffff 0%, #f5faf6 100%);
+        font: inherit;
+        color: #1f2d28;
+        transition: all 0.2s ease;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+      }
+      .data-form input:hover,
+      .data-form select:hover {
+        border-color: #a7c8b2;
+      }
+      .data-form input:focus,
+      .data-form select:focus {
+        outline: none;
+        border-color: #1d8f4d;
+        box-shadow: 0 0 0 4px rgba(29, 143, 77, 0.12);
+        background: #ffffff;
+      }
+      .data-form select {
+        background-image:
+          linear-gradient(45deg, transparent 50%, #1d8f4d 50%),
+          linear-gradient(135deg, #1d8f4d 50%, transparent 50%);
+        background-position:
+          calc(100% - 18px) calc(50% - 2px),
+          calc(100% - 12px) calc(50% - 2px);
+        background-size:
+          6px 6px,
+          6px 6px;
+        background-repeat: no-repeat;
+        padding-right: 42px;
+      }
+      .primary-btn,
+      .secondary-btn {
+        cursor: pointer;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
+      }
+      .primary-btn {
+        background: linear-gradient(135deg, #1d8f4d, #0f5f35);
+        color: #fff;
+        border: none;
+        font-weight: 700;
+        min-height: 56px;
+        border-radius: 14px;
+        padding: 15px 18px;
+        box-shadow: 0 12px 24px rgba(29, 143, 77, 0.22);
+      }
+      .primary-btn:hover,
+      .secondary-btn:hover {
+        transform: translateY(-1px);
+      }
+      .secondary-btn {
+        background: #edf7f0;
+        border: 1px solid #cfe6d6;
+        color: #0f5f35;
+        font-weight: 700;
+      }
+      .form-message {
+        min-height: 24px;
+        font-size: 0.95rem;
+        color: #0f5f35;
+        font-weight: 700;
+        padding-top: 7px;
+      }
+      .form-message.success {
+        color: #0f5f35;
+      }
+      .form-message.error {
+        color: #a12b2b;
+      }
+      .volunteer-connect-card,
+      .donate-card,
+      .programs-card {
+        border: 1px solid rgba(31, 45, 40, 0.04);
+      }
+      .card {
+        border: 1px solid rgba(31, 45, 40, 0.04);
+      }
+      @media (max-width: 700px) {
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
   </head>
   <body>
     <!-- HEADER -->
@@ -20,7 +137,7 @@
         </label>
         <nav class="main-nav">
           <ul>
-            <li><a href="home.html">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="about.html">About & Services</a></li>
             <li><a href="prayer.html">Prayer Times</a></li>
             <li><a href="events.html">Events</a></li>
@@ -71,6 +188,26 @@
           </div>
         </div>
 
+        <!-- MEMBERSHIP FORM -->
+        <div class="card volunteer-connect-card">
+          <h2>Become a Member</h2>
+          <p>
+            {% if user_logged_in %} You are already a member. {% else %}
+            Membership is completed when you create your account. Please use the
+            single registration form to set up your login details and member
+            information together. {% endif %}
+          </p>
+          <div class="card-buttons">
+            {% if user_logged_in %}
+            <a href="/account/profile" class="link-btn primary">Profile</a>
+            {% else %}
+            <a href="/account/register" class="link-btn primary"
+              >Create Account & Register as Member</a
+            >
+            {% endif %}
+          </div>
+        </div>
+
         <!-- DONATION SECTION -->
         <div class="card donate-card">
           <h2>Support Financially</h2>
@@ -85,8 +222,65 @@
           </div>
           <p class="note">
             Donations are used responsibly for mosque operations and community
-            initiatives.
+            initiatives. Minimum donation amount is ₦1,000.
           </p>
+
+          <form
+            id="donationForm"
+            class="data-form"
+            style="margin-top: 20px"
+            autocomplete="on"
+          >
+            <div class="form-grid">
+              <label>
+                Title
+                <select name="title">
+                  <option value="">Select title</option>
+                  <option value="Alhaji">Alhaji</option>
+                  <option value="Alhaja">Alhaja</option>
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Brother">Brother</option>
+                  <option value="Sister">Sister</option>
+                </select>
+              </label>
+              <label>
+                Full Name
+                <input
+                  type="text"
+                  name="full_name"
+                  placeholder="Full name"
+                  required
+                />
+              </label>
+              <label>
+                Email
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email address"
+                  required
+                />
+              </label>
+              <label>
+                Phone
+                <input type="tel" name="phone" placeholder="Phone number" />
+              </label>
+              <label>
+                Amount (₦)
+                <input
+                  type="number"
+                  name="amount"
+                  placeholder="1000"
+                  min="1000"
+                  required
+                />
+              </label>
+            </div>
+            <button class="primary-btn" type="submit">Pay With Paystack</button>
+            <div id="donationMessage" class="form-message"></div>
+          </form>
         </div>
 
         <!-- PROGRAMS SECTION -->
@@ -122,7 +316,7 @@
         <div class="footer-section">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="home.html">Home</a></li>
+            <li><a href="/">Home</a></li>
             <li><a href="prayer.html">Prayer Times</a></li>
             <li><a href="events.html">Events</a></li>
             <li><a href="learn.html">Learn</a></li>
@@ -139,5 +333,156 @@
         © 2026 FSSSMC Mosque • All Rights Reserved
       </div>
     </footer>
+
+    <script>
+      const query = new URLSearchParams(window.location.search);
+      const paymentStatus = query.get("payment");
+      const donationMessage = document.getElementById("donationMessage");
+      const memberMessage = document.getElementById("memberMessage");
+      const apiCandidates = [
+        "http://127.0.0.1:5000",
+        "http://localhost:5000",
+        window.location.origin,
+      ];
+
+      function resolveApiUrl(path) {
+        return `${apiCandidates[0]}${path}`;
+      }
+
+      async function fetchWithFallback(path, options) {
+        const uniqueCandidates = [...new Set(apiCandidates)];
+
+        let lastError = null;
+
+        for (const base of uniqueCandidates) {
+          try {
+            const response = await fetch(`${base}${path}`, options);
+            if (response.status === 404 || response.status === 405) {
+              continue;
+            }
+            return response;
+          } catch (error) {
+            lastError = error;
+          }
+        }
+
+        throw lastError || new Error("The server is unavailable.");
+      }
+
+      if (paymentStatus === "success") {
+        donationMessage.textContent =
+          "Donation confirmed successfully. Thank you for supporting FSSSMC Mosque.";
+      } else if (paymentStatus === "failed") {
+        donationMessage.classList.add("error");
+        donationMessage.textContent =
+          "Donation was not completed. Please try again.";
+      }
+
+      async function parseResponseJson(response) {
+        const text = await response.text();
+
+        if (!text) {
+          return {};
+        }
+
+        try {
+          return JSON.parse(text);
+        } catch (error) {
+          throw new Error(
+            text.length > 150 ? text.slice(0, 150) + "..." : text,
+          );
+        }
+      }
+
+      async function formSubmitHandler(
+        form,
+        endpoint,
+        messageElement,
+        successMessage,
+      ) {
+        const submitButton = form.querySelector('button[type="submit"]');
+        const originalButtonText = submitButton
+          ? submitButton.textContent.trim()
+          : "Submit";
+        const isDonationFlow = endpoint.includes("donations");
+
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          const formData = new FormData(form);
+          const payload = Object.fromEntries(formData.entries());
+
+          if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = isDonationFlow
+              ? "Processing payment..."
+              : "Submitting...";
+          }
+
+          messageElement.classList.remove("error");
+          messageElement.classList.add("success");
+          messageElement.textContent = isDonationFlow
+            ? "Processing payment..."
+            : "Submitting...";
+
+          try {
+            const response = await fetchWithFallback(endpoint, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(payload),
+            });
+
+            const result = await parseResponseJson(response);
+            if (!response.ok) {
+              throw new Error(
+                result.message || `Request failed (${response.status})`,
+              );
+            }
+
+            if (result.redirect_url) {
+              window.location.href = result.redirect_url;
+              return;
+            }
+
+            messageElement.classList.remove("error");
+            messageElement.classList.add("success");
+            messageElement.textContent = result.message || successMessage;
+            form.reset();
+          } catch (error) {
+            messageElement.classList.remove("success");
+            messageElement.classList.add("error");
+
+            if (
+              endpoint.includes("members") &&
+              error.message.includes("already registered as a mosque member")
+            ) {
+              messageElement.textContent =
+                "You are already registered as a mosque member. One membership per person is allowed.";
+            } else {
+              messageElement.textContent =
+                error.message || "The server returned an invalid response.";
+            }
+          } finally {
+            if (submitButton && !window.location.href.includes("paystack")) {
+              submitButton.disabled = false;
+              submitButton.textContent = originalButtonText;
+            }
+          }
+        });
+      }
+
+      formSubmitHandler(
+        document.getElementById("memberForm"),
+        "/api/members",
+        memberMessage,
+        "Your membership details were saved successfully.",
+      );
+
+      formSubmitHandler(
+        document.getElementById("donationForm"),
+        "/api/donations",
+        donationMessage,
+        "Donation saved successfully.",
+      );
+    </script>
   </body>
 </html>

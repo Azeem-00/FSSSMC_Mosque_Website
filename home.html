@@ -3,7 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FSSSMC Mosque</title>
+    <title>FSSSMC Mosque | Community of Faith</title>
+    <meta
+      name="description"
+      content="FSSSMC Mosque brings together worship, learning, community service, and meaningful connection for Muslim families and believers."
+    />
     <link rel="stylesheet" href="CSS/home.css" />
   </head>
   <body>
@@ -13,13 +17,15 @@
           <img src="IMAGE/FSSMC ICON.jpeg" alt="FSSMC Mosque Logo" />
           <span>FSSSMC Mosque</span>
         </div>
+
         <input type="checkbox" id="menu-toggle" />
-        <label for="menu-toggle" class="menu-icon">
+        <label for="menu-toggle" class="menu-icon" aria-label="Open menu">
           <span></span><span></span><span></span>
         </label>
-        <nav class="main-nav">
+
+        <nav class="main-nav" aria-label="Main navigation">
           <ul>
-            <li><a class="active" href="home.html">Home</a></li>
+            <li><a class="active" href="/">Home</a></li>
             <li><a href="about.html">About & Services</a></li>
             <li><a href="prayer.html">Prayer Times</a></li>
             <li><a href="events.html">Events</a></li>
@@ -32,22 +38,154 @@
       </div>
     </header>
 
-    <main class="hero">
-      <div class="hero-bg"></div>
-      <div class="hero-content">
-        <span class="welcome">As-Salaam-Alaikum</span>
-        <h1>
-          Welcome to Federal Site & Services Scheme Muslim Community (FSSSMC
-          WEBSITE)
-        </h1>
-        <br />
-        <h2>THERE ARE BLESSINGS IN SERVING ALLAH</h2>
-        <br />
-        <button class="btn-primary scroll-btn">
-          Use the navigation menu above for quick access
-          <span class="arrow">↑</span>
-        </button>
-      </div>
+    <main>
+      <section class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <div class="hero-copy">
+            <p class="eyebrow">As-Salaam-Alaikum</p>
+            <h1>Strengthening faith, unity, and service in our community.</h1>
+            <h2>There are blessings in serving Allah.</h2>
+            <p class="subtitle">
+              A welcoming place for worship, spiritual learning, family
+              connection, and acts of charity rooted in compassion and purpose.
+            </p>
+
+            {{ account_cta_html|safe }}
+
+            <ul class="hero-metrics" aria-label="Mosque highlights">
+              <li><strong>Daily</strong><span>Prayer Support</span></li>
+              <li><strong>Weekly</strong><span>Learning Sessions</span></li>
+              <li><strong>Yearly</strong><span>Community Outreach</span></li>
+            </ul>
+          </div>
+
+          <div class="hero-panel" aria-label="Mosque information card">
+            <div class="panel-top">
+              <span class="badge">Community</span>
+              <span class="badge light">Trusted</span>
+            </div>
+
+            <div class="panel-figure">
+              <img src="IMAGE/FSSMC ICON.jpeg" alt="FSSSMC community crest" />
+            </div>
+
+            <div class="panel-card-list">
+              <div>
+                <span class="label">Salat Times</span>
+                <strong>5 Daily Prayers</strong>
+              </div>
+              <div>
+                <span class="label">Programs</span>
+                <strong>Classes & Events</strong>
+              </div>
+              <div>
+                <span class="label">Service</span>
+                <strong>Care & Outreach</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-strip">
+        <div class="feature-box">
+          <span>01</span>
+          <h3>Prayer & Worship</h3>
+          <p>
+            Convenient access to daily prayer guidance and spiritual support.
+          </p>
+        </div>
+        <div class="feature-box">
+          <span>02</span>
+          <h3>Learning</h3>
+          <p>
+            Islamic teachings, mentorship, and helpful resources for all ages.
+          </p>
+        </div>
+        <div class="feature-box">
+          <span>03</span>
+          <h3>Community</h3>
+          <p>
+            Join events, volunteer, share care, and grow together as one family.
+          </p>
+        </div>
+      </section>
+
+      <section class="about-section">
+        <div class="section-heading">
+          <p class="eyebrow dark">Who we are</p>
+          <h2>Built around faith, service, and belonging.</h2>
+        </div>
+
+        <div class="about-grid">
+          <div class="about-copy">
+            <p>
+              The Federal Site & Services Scheme Muslim Community (FSSSMC) is a
+              faith-centered space where believers gather to worship, learn, and
+              serve with sincerity. Our mission is to create a warm and
+              welcoming environment for worship, community care, and spiritual
+              development.
+            </p>
+            <p>
+              Whether you are seeking guidance, looking to join a supportive
+              community, or helping to organize outreach initiatives, FSSSMC is
+              here to support your journey with compassion and purpose.
+            </p>
+          </div>
+
+          <div class="about-cards">
+            <div class="mini-card">
+              <h4>Community Growth</h4>
+              <p>Encouraging unity and mutual support across generations.</p>
+            </div>
+            <div class="mini-card">
+              <h4>Charitable Impact</h4>
+              <p>
+                Helping families and communities through giving and outreach.
+              </p>
+            </div>
+            <div class="mini-card">
+              <h4>Spiritual Guidance</h4>
+              <p>Access to learning, reflection, and intentional worship.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="program-section">
+        <div class="section-heading center">
+          <p class="eyebrow dark">What we offer</p>
+          <h2>Programs designed to support a stronger Muslim life.</h2>
+        </div>
+
+        <div class="program-grid">
+          <article class="program-card">
+            <div class="icon">☼</div>
+            <h3>Daily Prayer</h3>
+            <p>Stay connected with prayer times and the rhythm of worship.</p>
+          </article>
+          <article class="program-card">
+            <div class="icon">✦</div>
+            <h3>Islamic Teachings</h3>
+            <p>
+              Grow in understanding through classes and meaningful discussion.
+            </p>
+          </article>
+          <article class="program-card">
+            <div class="icon">♡</div>
+            <h3>Outreach</h3>
+            <p>Serve others with charity, compassion, and practical care.</p>
+          </article>
+          <article class="program-card">
+            <div class="icon">▣</div>
+            <h3>Events</h3>
+            <p>
+              Celebrate faith, fellowship, and shared moments across the year.
+            </p>
+          </article>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
@@ -55,15 +193,15 @@
         <div class="footer-section footer-brand">
           <img src="IMAGE/FSSMC ICON.jpeg" alt="Mosque Logo" />
           <h3>FSSSMC Mosque</h3>
-          <p>There Are Blessings In Serving Allah.</p>
+          <p>There are blessings in serving Allah.</p>
         </div>
 
         <div class="footer-section">
           <h4>Quick Links</h4>
           <ul>
-            <li><a href="home.html">Home</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="prayer.html">Prayer Times</a></li>
-            <li><a href="events.html">Events</a></li>
             <li><a href="learn.html">Learn</a></li>
           </ul>
         </div>
@@ -71,7 +209,7 @@
         <div class="footer-section">
           <h4>Contact</h4>
           <p>Email: mosque@email.com</p>
-          <p>Phone: +234 xxx xxx xxxx</p>
+          <p>Phone: +234 000 000 0000</p>
         </div>
       </div>
 
@@ -79,13 +217,5 @@
         © 2026 FSSSMC Mosque • All Rights Reserved
       </div>
     </footer>
-    <script>
-      document.querySelector(".scroll-btn").addEventListener("click", () => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      });
-    </script>
   </body>
 </html>
