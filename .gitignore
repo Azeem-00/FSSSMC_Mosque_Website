@@ -1,0 +1,12 @@
+.env
+.env.*
+!.env.example
+BACKEND/fsssmc.db
+BACKEND/.env
+BACKEND/.env.*
+BACKEND/__pycache__/
+__pycache__/
+.venv/
+*.pyc
+*.sqbpro
+BACKEND/.git/
