@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Create Admin Account</title>
+    <style>
+      :root {
+        --bg: #f4f7f1;
+        --panel: #ffffff;
+        --green: #1d8f4d;
+        --green-dark: #0f5f35;
+        --text: #1e2a27;
+        --muted: #5c6b66;
+        --line: #dfe9e2;
+        --danger: #a12b2b;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #edf7f0, #f8faf8);
+        color: var(--text);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      .card {
+        width: min(460px, 92vw);
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        padding: 32px 26px;
+        box-shadow: 0 18px 40px rgba(17, 37, 25, 0.08);
+      }
+      h1 {
+        margin: 0 0 8px;
+        font-size: 2rem;
+        color: var(--green-dark);
+      }
+      p {
+        margin: 0 0 22px;
+        color: var(--muted);
+      }
+      label {
+        display: block;
+        font-weight: 700;
+        margin-bottom: 8px;
+      }
+      input {
+        width: 100%;
+        padding: 14px 16px;
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        font-size: 1rem;
+        margin-bottom: 18px;
+      }
+      input:focus {
+        outline: none;
+        border-color: var(--green);
+        box-shadow: 0 0 0 4px rgba(29, 143, 77, 0.12);
+      }
+      button {
+        width: 100%;
+        border: none;
+        background: linear-gradient(135deg, var(--green), var(--green-dark));
+        color: white;
+        padding: 14px 18px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .error {
+        background: #fff0f0;
+        color: var(--danger);
+        border: 1px solid #f1c4c4;
+        padding: 10px 12px;
+        border-radius: 10px;
+        margin-bottom: 18px;
+        font-weight: 700;
+      }
+      a {
+        color: var(--green-dark);
+        text-decoration: none;
+        font-weight: 700;
+      }
+      .note {
+        margin-top: 18px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <h1>Create Admin</h1>
+      <p>Create the administrator account for the mosque dashboard.</p>
+
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST">
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" name="full_name" required />
+
+        <label for="username">Username</label>
+        <input type="text" id="username" name="username" required />
+
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" required />
+
+        <button type="submit">Create Admin Account</button>
+      </form>
+
+      <div class="note">
+        <a href="/admin/login">Back to login</a>
+      </div>
+    </div>
+  </body>
+</html>
